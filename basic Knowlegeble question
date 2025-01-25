@@ -1,0 +1,100 @@
+Create a database
+Create a table
+Insert data into a table
+Select data from a table
+Update data in a table
+Delete data from a table
+Alter a table (add column)
+Alter a table (drop column)
+Drop a table
+Create a primary key
+Create a foreign key
+Create an index
+Use DISTINCT in SELECT statement
+Use COUNT function
+Use SUM function
+Use AVG function
+Use MIN function
+Use MAX function
+Join two tables (INNER JOIN)
+Join two tables (LEFT JOIN)
+Join two tables (RIGHT JOIN)
+Join two tables (FULL OUTER JOIN)
+Use WHERE clause
+Use GROUP BY clause
+Use HAVING clause
+Use LIKE operator
+Use IN operator
+Use BETWEEN operator
+Use IS NULL operator
+Use NOT operator
+Create a view
+Drop a view
+Create a stored procedure
+Drop a stored procedure
+Call a stored procedure
+Create a function
+Drop a function
+Use an aggregate function
+Use the UNION operator
+Use the UNION ALL operator
+Use CASE statement
+Use COALESCE function
+Create a trigger
+Drop a trigger
+Use RANK function
+Use DENSE_RANK function
+Use ROW_NUMBER function
+Use Subquery in SELECT
+Use Subquery in WHERE
+Use Subquery in FROM
+Use EXISTS in subqueries
+Use NOT EXISTS in subqueries
+Use INNER JOIN with WHERE clause
+Use JOIN with SELECT DISTINCT
+Use ORDER BY clause
+Use LIMIT clause
+Use OFFSET clause
+Use a self-join
+Use CROSS JOIN
+Use NATURAL JOIN
+Use a subquery with aggregate functions
+Use aliases for tables and columns
+Use string functions (CONCAT, LENGTH, UPPER, LOWER)
+Use date functions (NOW, CURDATE, DATE_ADD)
+Use mathematical functions (ROUND, CEIL, FLOOR)
+Use the IFNULL function
+Use the NULLIF function
+Create an auto-increment field
+Create a table with default values
+Set a default value for a column
+Use the GROUP_CONCAT function
+Use the CONCAT_WS function
+Create a unique constraint
+Use a subquery to update records
+Use a subquery to delete records
+Use TRUNCATE table
+Use the INSERT INTO SELECT statement
+Use EXCEPT operator
+Use INNER JOIN with aggregate functions
+Use LEFT JOIN with GROUP BY
+Use DISTINCT with aggregate functions
+Create a temporary table
+Drop a temporary table
+Perform string comparison using LIKE
+Create a composite primary key
+Create a composite foreign key
+Use GROUP BY with aggregate functions
+Use LIMIT and OFFSET with ORDER BY
+Use the REPLACE function
+Use the SUBSTRING function
+Use the POSITION function
+Use the TRIM function
+Create an index on multiple columns
+Create a full-text search index
+Create a stored function
+Update multiple columns with a single statement
+Use the EXPLAIN command for query optimization
+Use the INTERSECT operator
+Use the INTERVAL function
+Use the CAST function
