@@ -1,0 +1,227 @@
+1. Prime Numbers
+
+WITH RECURSIVE generate_series AS (
+    SELECT 2 AS num
+    UNION ALL
+    SELECT num + 1 FROM generate_series WHERE num < 100
+)
+SELECT num
+FROM generate_series
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM generate_series AS inner_series
+    WHERE inner_series.num < generate_series.num
+    AND generate_series.num % inner_series.num = 0
+);
+
+Explanation:
+
+WITH RECURSIVE generate_series AS: This defines a recursive CTE (Common Table Expression) named generate_series that will generate a series of numbers.
+SELECT 2 AS num: The base case of the recursion starts with 2, which is the first prime number.
+UNION ALL: This combines the base case and the recursive part.
+SELECT num + 1 FROM generate_series WHERE num < 100: This recursively adds 1 to the previous number, generating a series of numbers from 2 to 100.
+SELECT num FROM generate_series: This selects all numbers from the generate_series CTE.
+WHERE NOT EXISTS: Filters out the non-prime numbers.
+SELECT 1 FROM generate_series AS inner_series WHERE inner_series.num < generate_series.num AND generate_series.num % inner_series.num = 0: This checks if any number less than generate_series.num divides it evenly. If it does, it's not prime.
+Output:
+
+num
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+...
+
+
+
+
+
+
+
+2. Fibonacci Sequence
+
+WITH RECURSIVE fibonacci(n, fib) AS (
+    SELECT 1, 0
+    UNION ALL
+    SELECT n + 1, fib + (SELECT fib FROM fibonacci WHERE n = n - 1)
+    FROM fibonacci
+    WHERE n < 10
+)
+SELECT fib FROM fibonacci;
+
+Explanation:
+
+WITH RECURSIVE fibonacci(n, fib) AS: Defines a recursive CTE named fibonacci to calculate the Fibonacci sequence. It has two columns: n for the term index and fib for the Fibonacci number.
+SELECT 1, 0: Base case for the Fibonacci sequence. The first term (n=1) has the value 0.
+UNION ALL: Combines the base case and the recursive part.
+SELECT n + 1, fib + (SELECT fib FROM fibonacci WHERE n = n - 1): The recursive part calculates the next Fibonacci number by adding the previous two Fibonacci numbers.
+WHERE n < 10: Limits the sequence to 10 terms.
+SELECT fib FROM fibonacci: Selects the Fibonacci numbers.
+Output:
+
+fib
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+
+
+
+
+
+
+3. Factorial
+
+WITH RECURSIVE factorial(n, fact) AS (
+    SELECT 1, 1
+    UNION ALL
+    SELECT n + 1, fact * (n + 1)
+    FROM factorial
+    WHERE n < 5
+)
+SELECT fact FROM factorial WHERE n = 5;
+
+
+Explanation:
+
+WITH RECURSIVE factorial(n, fact) AS: Defines a recursive CTE factorial with columns n for the number and fact for its factorial.
+SELECT 1, 1: The base case starts with n=1 and fact=1 (since 1! = 1).
+UNION ALL: Combines the base case and the recursive part.
+SELECT n + 1, fact * (n + 1): This recursively calculates the factorial by multiplying the current value of fact by n + 1.
+WHERE n < 5: Limits the recursion to calculate factorial up to 5.
+SELECT fact FROM factorial WHERE n = 5: Retrieves the factorial of 5.
+Output:
+
+fact
+120
+
+
+
+
+
+
+
+
+4. Palindrome Check
+
+WITH palindrome_check AS (
+    SELECT 'racecar' AS word, REVERSE('racecar') AS reversed_word
+)
+SELECT word, CASE
+    WHEN word = reversed_word THEN 'Palindrome'
+    ELSE 'Not a Palindrome'
+END AS result
+FROM palindrome_check;
+
+Explanation:
+
+WITH palindrome_check AS: Defines a CTE that checks if a word is a palindrome.
+SELECT 'racecar' AS word, REVERSE('racecar') AS reversed_word: The word racecar is stored as word, and its reverse is calculated using the REVERSE() function and stored as reversed_word.
+SELECT word, CASE WHEN word = reversed_word THEN 'Palindrome' ELSE 'Not a Palindrome' END AS result: Checks if the word is the same as its reverse. If they match, it returns 'Palindrome'; otherwise, it returns 'Not a Palindrome'.
+Output:
+
+word	result
+racecar	Palindrome
+
+
+
+
+
+
+
+5. Sum of First N Natural Numbers
+
+WITH RECURSIVE sum_n(n, sum) AS (
+    SELECT 1, 1
+    UNION ALL
+    SELECT n + 1, sum + (n + 1)
+    FROM sum_n
+    WHERE n < 10
+)
+SELECT sum FROM sum_n WHERE n = 10;
+
+Explanation:
+
+WITH RECURSIVE sum_n(n, sum) AS: Defines a recursive CTE to calculate the sum of the first N natural numbers.
+SELECT 1, 1: The base case starts with n=1 and sum=1.
+UNION ALL: Combines the base case and the recursive part.
+SELECT n + 1, sum + (n + 1): Recursively adds the next natural number to the sum.
+WHERE n < 10: Limits the recursion to the first 10 natural numbers.
+SELECT sum FROM sum_n WHERE n = 10: Retrieves the sum of the first 10 numbers.
+Output:
+
+sum
+55
+
+
+
+
+
+
+
+
+6. Reverse a String
+
+WITH RECURSIVE reverse_string(str, reversed_str, len) AS (
+    SELECT 'Hello', '', LENGTH('Hello')
+    UNION ALL
+    SELECT SUBSTRING(str, 2), CONCAT(SUBSTRING(str, 1, 1), reversed_str), len - 1
+    FROM reverse_string
+    WHERE len > 0
+)
+SELECT reversed_str FROM reverse_string WHERE len = 0;
+
+Explanation:
+
+WITH RECURSIVE reverse_string(str, reversed_str, len) AS: Defines a recursive CTE to reverse a string.
+SELECT 'Hello', '', LENGTH('Hello'): The base case is the string 'Hello', and the reversed_str is initially empty. len is the length of the string.
+UNION ALL: Combines the base case and the recursive part.
+SELECT SUBSTRING(str, 2), CONCAT(SUBSTRING(str, 1, 1), reversed_str), len - 1: Recursively takes the first character of the string and appends it to reversed_str.
+WHERE len > 0: The recursion continues until the length is greater than 0.
+SELECT reversed_str FROM reverse_string WHERE len = 0: After the recursion is complete, it returns the reversed string.
+
+Output:
+
+reversed_str
+olleH
+
+
+
+
+
+
+7. Sum of Digits
+
+WITH RECURSIVE sum_digits(n, sum) AS (
+    SELECT 12345, 0
+    UNION ALL
+    SELECT n / 10, sum + (n % 10)
+    FROM sum_digits
+    WHERE n > 0
+)
+SELECT sum FROM sum_digits WHERE n = 0;
+Explanation:
+
+WITH RECURSIVE sum_digits(n, sum) AS: Defines a recursive CTE to calculate the sum of digits.
+SELECT 12345, 0: The base case starts with the number 12345 and an initial sum of 0.
+UNION ALL: Combines the base case and the recursive part.
+SELECT n / 10, sum + (n % 10): In each step, the number is divided by 10, and the last digit (n % 10) is added to the sum.
+WHERE n > 0: The recursion continues until the number becomes 0.
+SELECT sum FROM sum_digits WHERE n = 0: After the recursion ends, it returns the final sum of digits.
+Output:
+
+sum
+15
