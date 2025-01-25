@@ -1,0 +1,156 @@
+employees Table:
+
+employee_id	employee_name	salary	department	hire_date
+1	John Doe	70000	HR	2018-03-10
+2	Alice Smith	50000	IT	2019-07-15
+3	Bob Brown	55000	IT	2017-05-20
+4	Charlie Davis	80000	HR	2015-12-01
+5	Eva Green	60000	Marketing	2020-06-25
+6	David Wilson	75000	HR	2017-11-10
+
+1. Find the second highest salary from the employee table
+
+SELECT MAX(salary) AS second_highest_salary
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+
+Explanation:
+
+The subquery finds the maximum salary in the employees table.
+The outer query selects the maximum salary that is less than the result from the subquery, which gives the second highest salary.
+Output:
+second_highest_salary
+----------------------
+75000
+
+2. Find the employees who have the same salary as the maximum salary
+
+SELECT employee_name, salary
+FROM employees
+WHERE salary = (SELECT MAX(salary) FROM employees);
+Explanation:
+The subquery returns the maximum salary in the employees table.
+The main query returns employees whose salary matches this maximum salary.
+Output:
+employee_name | salary
+--------------|-------
+Charlie Davis | 80000
+
+3. Find the employees who earn more than the average salary
+
+SELECT employee_name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+Explanation:
+The subquery calculates the average salary of all employees.
+The outer query returns employees whose salary is greater than the calculated average.
+Output:
+employee_name | salary
+--------------|-------
+John Doe      | 70000
+Charlie Davis | 80000
+David Wilson  | 75000
+
+4. Count the number of employees in each department
+
+SELECT department, COUNT(*) AS employee_count
+FROM employees
+GROUP BY department;
+
+Explanation:
+The GROUP BY clause groups employees by their department.
+The COUNT(*) function returns the number of employees in each department.
+
+Output:
+department | employee_count
+-----------|---------------
+HR         | 3
+IT         | 2
+Marketing  | 1
+
+5. Find the employee who has the minimum salary
+
+SELECT employee_name, salary
+FROM employees
+WHERE salary = (SELECT MIN(salary) FROM employees);
+Explanation:
+
+The subquery calculates the minimum salary from the employees table.
+The outer query returns the employee(s) with the minimum salary.
+Output:
+employee_name | salary
+--------------|-------
+Alice Smith   | 50000
+
+6. Find the total salary of employees in each department
+
+SELECT department, SUM(salary) AS total_salary
+FROM employees
+GROUP BY department;
+Explanation:
+The GROUP BY clause groups employees by their department.
+The SUM(salary) function calculates the total salary for each department.
+Output:
+department | total_salary
+-----------|-------------
+HR         | 225000
+IT         | 105000
+Marketing  | 60000
+
+7. Find employees who have the same salary as a given employee
+
+SELECT employee_name, salary
+FROM employees
+WHERE salary = (SELECT salary FROM employees WHERE employee_name = 'John Doe');
+Explanation:
+
+The subquery finds the salary of 'John Doe'.
+The outer query returns all employees whose salary matches that of 'John Doe'.
+Output:
+employee_name | salary
+--------------|-------
+John Doe      | 70000
+
+8. Find the employees whose name starts with a particular letter
+
+SELECT employee_name, salary
+FROM employees
+WHERE employee_name LIKE 'J%';
+Explanation:
+
+The LIKE operator is used to match any employee whose name starts with 'J'.
+Output:
+
+employee_name | salary
+--------------|-------
+John Doe      | 70000
+
+9. Find the employees who are working in a particular range of salary
+
+SELECT employee_name, salary
+FROM employees
+WHERE salary BETWEEN 40000 AND 70000;
+Explanation:
+
+The BETWEEN operator is used to filter employees whose salary lies between 40,000 and 70,000.
+Output:
+
+employee_name | salary
+--------------|-------
+Alice Smith   | 50000
+Bob Brown     | 55000
+John Doe      | 70000
+
+10. Find the employees who do not have a manager
+
+SELECT employee_name
+FROM employees
+WHERE manager_id IS NULL;
+Explanation:
+
+The query selects employees where the manager_id is NULL, meaning they do not have a manager.
+Output:
+employee_name
+--------------
+Alice Smith
